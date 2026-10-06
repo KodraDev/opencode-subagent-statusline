@@ -85,7 +85,7 @@ Usa el slot público `prepend: "sidebar.content"`: al principio del contenido de
     {
       "package": "C:/Users/Joaku/Desktop/Dev/personal/opencode-plugins/opencode-subagent-statusline",
       "options": {
-        "maxItems": 8,
+        "maxItems": 3,
         "showTokens": true
       }
     }
@@ -95,7 +95,7 @@ Usa el slot público `prepend: "sidebar.content"`: al principio del contenido de
 
 | Opción | Predeterminado | Descripción |
 | --- | --- | --- |
-| `maxItems` | `8` | Límite inicial de filas, entre 1 y 50. Nunca oculta subagentes en ejecución. `+N more` muestra el resto. |
+| `maxItems` | `3` | Límite inicial de filas, entre 1 y 50. Nunca oculta subagentes en ejecución. `+N more` muestra el resto. |
 | `showTokens` | `true` | Muestra uso de tokens junto a la duración. |
 
 ## Desarrollo

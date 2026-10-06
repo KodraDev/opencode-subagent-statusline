@@ -9,7 +9,7 @@ interface Options {
 
 function readOptions(options: Plugin.Context["options"]): Options {
   const maxItems = typeof options.maxItems === "number" && Number.isFinite(options.maxItems)
-    ? Math.min(50, Math.max(1, Math.floor(options.maxItems))) : 8
+    ? Math.min(50, Math.max(1, Math.floor(options.maxItems))) : 3
   return { maxItems, showTokens: options.showTokens !== false }
 }
 
