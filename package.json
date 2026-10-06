@@ -1,0 +1,55 @@
+{
+  "name": "kodradev-opencode-subagent-statusline",
+  "version": "0.1.0",
+  "description": "Live subagent status, execution time and token usage in the OpenCode V2 sidebar",
+  "packageManager": "pnpm@11.9.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KodraDev/opencode-subagent-statusline.git"
+  },
+  "homepage": "https://github.com/KodraDev/opencode-subagent-statusline#readme",
+  "bugs": {
+    "url": "https://github.com/KodraDev/opencode-subagent-statusline/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./tui": "./dist/tui.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node script/build-tui.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepack": "pnpm run build"
+  },
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "subagents",
+    "statusline",
+    "tui"
+  ],
+  "peerDependencies": {
+    "@opencode/plugin": ">=2.0.23 <3",
+    "@opentui/core": ">=0.5.14 <0.6",
+    "@opentui/solid": ">=0.5.14 <0.6",
+    "solid-js": "^1.9.12"
+  },
+  "devDependencies": {
+    "@opencode/client": "2.0.23",
+    "@opencode/plugin": "2.0.23",
+    "@opencode/theme": "2.0.23",
+    "@opentui/core": "0.5.14",
+    "@opentui/solid": "0.5.14",
+    "@types/node": "^24.3.0",
+    "solid-js": "1.9.12",
+    "typescript": "^5.8.2"
+  }
+}

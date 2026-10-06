@@ -1,0 +1,5 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  // Load this package only for sessions opened from this directory.
+  "plugins": ["./dist"]
+}
