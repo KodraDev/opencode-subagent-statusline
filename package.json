@@ -1,6 +1,6 @@
 {
   "name": "kodradev-opencode-subagent-statusline",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Live subagent status, execution time and token usage in the OpenCode V2 sidebar",
   "packageManager": "pnpm@11.9.0",
   "repository": {
