@@ -1,6 +1,6 @@
 import { Plugin } from "@opencode/plugin/tui"
 import { createEffect, createMemo, createSignal, For, onCleanup, Show } from "solid-js"
-import { createSubagentTracker, formatDuration, formatTokens, type SubagentStatus } from "./subagents.js"
+import { createSubagentTracker, formatCost, formatDuration, formatTokens, type Subagent, type SubagentStatus } from "./subagents.js"
 
 interface Options {
   maxItems: number
@@ -43,6 +43,12 @@ function SubagentPanel(props: { context: Plugin.Context; sessionID: string; opti
   }
   const summaryColor = (status: SubagentStatus) => counts()[status] > 0 ? color(status) : theme().text.muted
 
+  const meta = (row: Subagent) => {
+    if (row.error !== undefined) return { text: `× ${row.error}`, color: theme().text.feedback.error.base }
+    if (row.retry !== undefined) return { text: `↻ ${row.retry}`, color: theme().text.feedback.warning.base }
+    return row.model === undefined ? undefined : { text: row.model, color: theme().text.muted }
+  }
+
   createEffect(() => {
     if (!running()) return
     setNow(Date.now())
@@ -76,6 +82,7 @@ function SubagentPanel(props: { context: Plugin.Context; sessionID: string; opti
           <text
             fg={theme().text.feedback.error.base}
             wrapMode="word"
+            selectable={false}
             onMouseUp={() => { void tracker.refresh() }}
           >
             {tracker.loading() ? "Retrying…" : "Could not load subagents · retry"}
@@ -94,6 +101,7 @@ function SubagentPanel(props: { context: Plugin.Context; sessionID: string; opti
                       wrapMode="none"
                       flexGrow={1}
                       minWidth={0}
+                      selectable={false}
                       onMouseUp={() => props.context.ui.router.navigate({ type: "session", sessionID: row.id })}
                     >
                       {row.title}
@@ -101,20 +109,28 @@ function SubagentPanel(props: { context: Plugin.Context; sessionID: string; opti
                   </box>
                   <text fg={theme().text.muted} paddingLeft={2} wrapMode="none" truncate minWidth={0}>
                     ◷ {formatDuration(row.timing, running() ? now() : Date.now())}
-                    {props.options.showTokens ? ` · ${formatTokens(row.tokens)} tok` : ""}
+                    {props.options.showTokens ? ` · ${formatTokens(row.tokens)}` : ""}
+                    {` · ${formatCost(row.cost)}`}
                   </text>
+                  <Show when={meta(row)}>
+                    {(info) => (
+                      <text fg={info().color} paddingLeft={2} wrapMode="none" truncate minWidth={0}>
+                        {info().text}
+                      </text>
+                    )}
+                  </Show>
                 </box>
               )}
             </For>
           </box>
         </Show>
         <Show when={hidden() > 0}>
-          <text fg={theme().text.action.primary.base} marginTop={1} onMouseUp={() => setExpanded(true)}>
+          <text fg={theme().text.action.primary.base} marginTop={1} selectable={false} onMouseUp={() => setExpanded(true)}>
             +{hidden()} more
           </text>
         </Show>
         <Show when={expanded() && tracker.rows().length > visibleLimit()}>
-          <text fg={theme().text.action.primary.base} marginTop={1} onMouseUp={() => setExpanded(false)}>
+          <text fg={theme().text.action.primary.base} marginTop={1} selectable={false} onMouseUp={() => setExpanded(false)}>
             Show fewer
           </text>
         </Show>
