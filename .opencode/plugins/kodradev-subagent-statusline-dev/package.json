@@ -1,0 +1,9 @@
+{
+  "name": "kodradev-subagent-statusline-dev",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./tui": "./tui.js"
+  }
+}

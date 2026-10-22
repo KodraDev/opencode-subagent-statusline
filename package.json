@@ -29,6 +29,7 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json && node script/build-tui.mjs",
+    "dev": "node script/dev.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "prepack": "pnpm run build"
   },

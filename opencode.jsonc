@@ -1,5 +1,5 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  // Load this package only for sessions opened from this directory.
-  "plugins": ["./dist"]
+  // Use the discovered development wrapper instead of the global npm plugin.
+  "plugins": ["-kodradev-opencode-subagent-statusline"]
 }

@@ -14,16 +14,26 @@ pnpm run typecheck
 pnpm run build
 ```
 
-Open OpenCode from this directory after building. The included `opencode.jsonc` loads `./dist`, so no global configuration changes are needed. Rebuild and restart OpenCode after changing the source.
+Open OpenCode from this directory after building. The repository-local wrappers in `.opencode/plugins/kodradev-subagent-statusline-dev/` load `dist/` under separate development IDs. The included `opencode.jsonc` disables the production plugin here, so other projects keep using the globally configured npm package.
 
-To try the local build in another project, add the absolute path to this repository to that project's `plugins` array instead of the npm package name.
+For automatic rebuilds, run this in a separate terminal and leave it running:
+
+```sh
+pnpm run dev
+```
+
+The watcher builds once and rebuilds when `src/` changes. OpenCode reloads changed local modules; reopen the TUI if a change is not picked up.
+
+To use npm globally alongside local development, install with `opencode plugin add kodradev-opencode-subagent-statusline@latest`. Do not also configure the package in `cli.json`: terminal-level entries take precedence and would re-enable the production plugin in this checkout.
 
 ## Project structure
 
 - `src/tui.tsx`: sidebar rendering, plugin registration, and options.
 - `src/subagents.ts`: session discovery, event tracking, execution time, and token formatting.
 - `src/index.ts`: no-op server entrypoint for automatic discovery of the TUI plugin.
+- `.opencode/plugins/kodradev-subagent-statusline-dev/`: repository-local development wrappers.
 - `script/build-tui.mjs`: Solid/OpenTUI JSX transformation.
+- `script/dev.mjs`: local development build watcher.
 - `.github/workflows/publish.yml`: npm publishing.
 
 The build compiles TypeScript and transforms JSX into `dist/`. Renderer dependencies remain external so the plugin uses OpenCode's instances. Bun is not required to build.
